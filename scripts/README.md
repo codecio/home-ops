@@ -11,6 +11,7 @@ Find and confirm target disk to be imaged.
     diskutil list
     diskutil unmountDisk /dev/disk2
     ./prep-media.sh disk2
+    diskutil eject /dev/disk2
 
 ## TODO
 
