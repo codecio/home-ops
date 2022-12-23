@@ -24,7 +24,7 @@ fi
 # Simple URL Validation
 function validate_url()
 {
-    wget --spider $1 >/dev/null 2>&1
+    wget --spider "$1" >/dev/null 2>&1
     return $?
 }
 
@@ -43,10 +43,10 @@ cut -f 1 -d ' ')
 
 function verify_iso()
 {
-    echo $1 "*$2" | shasum -a 256 --check
+    echo "$1" "*$2" | shasum -a 256 --check
 }
 
-if verify_iso $extracted_iso_shasum $promox_ve_url_page; then
+if verify_iso "$extracted_iso_shasum" "$promox_ve_url_page"; then
     echo "shasum verified: OK"
     else
     echo "shasum verified: NO" && exit 1
@@ -54,7 +54,7 @@ fi
 
 # Select USB Disk target
 
-read -n1 -p "You are about to erase /dev/$disk_target. Are you sure? [y/N] "
+read -r -n1 -p "You are about to erase /dev/$disk_target. Are you sure? [y/N] "
 echo
 case $REPLY in
     y | Y)
@@ -69,10 +69,10 @@ esac
 # Simple image file copy to USB flash drive.
 function create_usb()
 {
-    sudo dd bs=100M if=./$promox_ve_url_page of=/dev/$1 status=progress
+    sudo dd bs=100M if=./$promox_ve_url_page of=/dev/"$1" status=progress
 }
 
-if create_usb $disk_target; then
+if create_usb "$disk_target"; then
     # USB imaged
     echo "/dev/$disk_target imaged with $promox_ve_url_page"
     else
