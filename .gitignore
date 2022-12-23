@@ -30,3 +30,6 @@ override.tf.json
 
 # Ignore any *.iso images
 *.iso
+
+# Ignore MacOS .DS_Store
+.DS_Store
