@@ -15,3 +15,9 @@ Infra for the homelab with a focus on using gitops practices.
 - [ ] Setup pre-commit and CI linting.
 
 </details>
+
+## CLI and GUI tools
+
+Installed via [Homebrew](https://brew.sh/)
+
+- [direnv](https://github.com/direnv/direnv)
