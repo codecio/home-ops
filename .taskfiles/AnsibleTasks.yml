@@ -1,0 +1,44 @@
+---
+version: "3"
+
+env:
+  ANSIBLE_CONFIG: "{{.PROJECT_DIR}}/ansible.cfg"
+
+vars:
+  ANSIBLE_PLAYBOOK_DIR: "{{.ANSIBLE_DIR}}/playbooks"
+  ANSIBLE_INVENTORY_DIR: "{{.ANSIBLE_DIR}}/inventory"
+
+tasks:
+
+  venv:
+    desc: Setup venv for ansible.
+    cmds:
+      - |
+        python3 -m venv "{{.ANSIBLE_DIR}}/venv/ansible-core"
+        source "{{.ANSIBLE_DIR}}/venv/ansible-core/bin/activate"
+        pip3 install -r "{{.ANSIBLE_DIR}}/requirements.txt"
+        python3 -V
+        ansible --version
+
+  venv-activate:
+    desc: Echo command to activate venv for ansible-core to work within this repo.
+    cmds:
+      - echo "source {{.ANSIBLE_DIR}}/venv/ansible-core/bin/activate"
+
+  list:
+    desc: List all the hosts
+    dir: provision/ansible
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts
+
+  ping:
+    desc: Ping all the hosts
+    dir: provision/ansible
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -m 'ping'
+
+  uptime:
+    desc: Uptime of all the hosts
+    dir: provision/ansible
+    cmds:
+      - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -a 'uptime'
