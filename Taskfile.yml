@@ -1,0 +1,29 @@
+---
+version: "3"
+
+vars:
+  PROJECT_DIR:
+    sh: "git rev-parse --show-toplevel"
+  KUBERNETES_DIR: "{{.PROJECT_DIR}}/cluster"
+  ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
+  TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform"
+
+includes:
+  ansible: .taskfiles/AnsibleTasks.yml
+
+tasks:
+
+  init:
+    desc: Initialize workstation dependencies with Brew
+    cmds:
+      - brew install {{.DEPS}} {{.CLI_ARGS}}
+    preconditions:
+      - sh: command -v brew
+        msg: |
+          Homebrew is not installed. Using MacOS, Linux or WSL?
+          Head over to https://brew.sh to get up and running.
+    vars:
+      DEPS: >-
+        age
+        direnv
+        go-task/tap/go-task

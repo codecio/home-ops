@@ -21,3 +21,5 @@ Infra for the homelab with a focus on using gitops practices.
 Installed via [Homebrew](https://brew.sh/)
 
 - [direnv](https://github.com/direnv/direnv)
+- [go-task](https://taskfile.dev/installation/)
+
