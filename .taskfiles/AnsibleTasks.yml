@@ -25,20 +25,27 @@ tasks:
     cmds:
       - echo "source {{.ANSIBLE_DIR}}/venv/ansible-core/bin/activate"
 
+  init:
+    desc: Install / Upgrade Ansible galaxy deps
+    dir: ansible/
+    cmds:
+      - ansible-galaxy install -r requirements.yml --roles-path ~/.ansible/roles --force
+      - ansible-galaxy collection install -r requirements.yml --collections-path ~/.ansible/collections --force
+
   list:
     desc: List all the hosts
-    dir: provision/ansible
+    dir: ansible/
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts
 
   ping:
     desc: Ping all the hosts
-    dir: provision/ansible
+    dir: ansible/
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -m 'ping'
 
   uptime:
     desc: Uptime of all the hosts
-    dir: provision/ansible
+    dir: ansible/
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -a 'uptime'
