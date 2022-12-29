@@ -5,5 +5,6 @@
         "HashiCorp.terraform",
         "ZainChen.json",
         "PKief.material-icon-theme",
+        "signageos.signageos-vscode-sops",
     ]
 }

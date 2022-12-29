@@ -42,3 +42,9 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# vscode-sops and secret keys.
+.decrypted~*.yaml
+*.agekey
+*.pub
+*.key
