@@ -4,5 +4,6 @@
         "redhat.vscode-yaml",
         "HashiCorp.terraform",
         "ZainChen.json",
+        "PKief.material-icon-theme",
     ]
 }
