@@ -1,0 +1,34 @@
+---
+version: "3"
+
+tasks:
+
+  init:
+    desc: Initialize terraform dependencies
+    dir: terraform/proxmox
+    cmds:
+      - terraform init {{.CLI_ARGS}}
+
+  plan:
+    desc: Show the changes terraform will make
+    dir: terraform/proxmox
+    cmds:
+      - terraform plan {{.CLI_ARGS}}
+
+  apply:
+    desc: Apply the changes to Cloudflare
+    dir: terraform/proxmox
+    cmds:
+      - terraform apply {{.CLI_ARGS}}
+
+  fmt:
+    desc: rewrite Terraform configuration files to a canonical format and style.
+    dir: terraform/proxmox
+    cmds:
+      - terraform fmt {{.CLI_ARGS}}
+
+  validate:
+    desc: validates the configuration files in a directory,
+    dir: terraform/proxmox
+    cmds:
+      - terraform validate {{.CLI_ARGS}}

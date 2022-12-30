@@ -10,6 +10,8 @@ vars:
 
 includes:
   ansible: .taskfiles/AnsibleTasks.yml
+  terraform: .taskfiles/TerraformTasks.yml
+  sops: .taskfiles/SopsTasks.yml
 
 tasks:
 
@@ -27,3 +29,5 @@ tasks:
         age
         direnv
         go-task/tap/go-task
+        sops
+        terraform
