@@ -4,3 +4,6 @@ provider "proxmox" {
   pm_api_token_id     = data.sops_file.pm_secrets.data["pm_api_token_id"]
   pm_tls_insecure     = true
 }
+
+provider "curl" {
+}

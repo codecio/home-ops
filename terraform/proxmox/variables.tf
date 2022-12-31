@@ -23,3 +23,18 @@ variable "pm_vlan_num" {
   type    = string
   default = "40"
 }
+
+variable "pm_subnet_cidr" {
+  type    = string
+  default = "192.168.40"
+}
+
+variable "pm_storage_data_zfs_sda" {
+  type    = string
+  default = "data_zfs_sda"
+}
+
+variable "pm_storage_data_zfs_sdb" {
+  type    = string
+  default = "data_zfs_sdb"
+}

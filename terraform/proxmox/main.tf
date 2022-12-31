@@ -15,6 +15,10 @@ terraform {
       source  = "carlpett/sops"
       version = "0.7.1"
     }
+    curl = {
+      source  = "anschoewe/curl"
+      version = "1.0.2"
+    }
   }
   required_version = ">= 1.3.0"
 }
