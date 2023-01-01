@@ -20,7 +20,7 @@ qm create $fedora_vm_id \
 --net0 virtio,bridge=vmbr0 \
 --hotplug network,disk,cpu,memory \
 --agent 1 \
---name cloud-init-fedoracloudbase-37 \
+--name fedora-cloud-base-37-cloudinit-template \
 --ostype l26
 qm importdisk $fedora_vm_id $fedora_cb_url_file_raw $fedora_cd_import_disk_target
 qm set $fedora_vm_id --scsihw virtio-scsi-pci --virtio0 $fedora_cd_import_disk_target:vm-$fedora_vm_id-disk-0
