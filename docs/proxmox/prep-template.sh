@@ -7,12 +7,14 @@ fedora_cb_url_path="/pub/fedora/linux/releases/37/Cloud/x86_64/images/"
 fedora_cb_url_base="$fedora_cb_url_domain$fedora_cb_url_path"
 fedora_cb_url_file="Fedora-Cloud-Base-$fedora_cb_ver.x86_64.raw.xz"
 fedora_cb_url_file_raw="Fedora-Cloud-Base-$fedora_cb_ver.x86_64.raw"
+fedora_cd_import_disk_target="data_zfs_sdb"
 fedora_vm_id=9000
 
 # setup
-apt install cloud-init xz-utils -y
+apt install cloud-init xz-utils libguestfs-tools -y
 wget --no-clobber $fedora_cb_url_base$fedora_cb_url_file
 unxz $fedora_cb_url_file
+virt-customize -a "$fedora_cb_url_file_raw" --install qemu-guest-agent
 qm create $fedora_vm_id \
 --memory 4096 --sockets 1 --cores 2 --vcpu 2 \
 --net0 virtio,bridge=vmbr0 \
@@ -20,9 +22,9 @@ qm create $fedora_vm_id \
 --agent 1 \
 --name cloud-init-fedoracloudbase-37 \
 --ostype l26
-qm importdisk $fedora_vm_id $fedora_cb_url_file_raw local-lvm
-qm set $fedora_vm_id --scsihw virtio-scsi-pci --virtio0 local-lvm:vm-$fedora_vm_id-disk-0
-qm set $fedora_vm_id --ide2 local-lvm:cloudinit
+qm importdisk $fedora_vm_id $fedora_cb_url_file_raw $fedora_cd_import_disk_target
+qm set $fedora_vm_id --scsihw virtio-scsi-pci --virtio0 $fedora_cd_import_disk_target:vm-$fedora_vm_id-disk-0
+qm set $fedora_vm_id --ide2 $fedora_cd_import_disk_target:cloudinit
 qm set $fedora_vm_id --boot c --bootdisk virtio0
 qm set $fedora_vm_id --serial0 socket
 qm set $fedora_vm_id --numa 1
