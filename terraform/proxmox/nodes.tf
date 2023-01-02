@@ -14,20 +14,20 @@ resource "proxmox_vm_qemu" "k3s_control_nodes" {
   memory      = 4096
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "virtio0"
-  ipconfig0   = "ip=${var.pm_subnet_cidr}.10${count.index}/24,gw=${var.pm_subnet_cidr}.1"
-  nameserver  = "8.8.8.8"
   onboot      = true
-  ciuser      = "ansible"
+  ipconfig0   = "ip=${var.pm_subnet_cidr}.10${count.index}/24,gw=${var.pm_subnet_cidr}.1"
+  nameserver  = var.pm_nameserver
+  ciuser      = var.pm_ciuser_name
   sshkeys     = local.ssh_pub_keys
 
   disk {
-    type    = "virtio"
-    size    = "2252M"
+    type    = var.pm_storage_type
+    size    = var.pm_storage_size
     storage = var.pm_storage_data_zfs_sda
   }
 
   network {
-    model    = "virtio"
+    model    = var.pm_nic_type
     bridge   = var.pm_nic_name
     tag      = var.pm_vlan_num
     firewall = false
@@ -56,20 +56,20 @@ resource "proxmox_vm_qemu" "k3s_worker_nodes" {
   memory      = 4096
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "virtio0"
-  ipconfig0   = "ip=${var.pm_subnet_cidr}.10${count.index + 3}/24,gw=${var.pm_subnet_cidr}.1"
-  nameserver  = "8.8.8.8"
   onboot      = true
-  ciuser      = "ansible"
+  ipconfig0   = "ip=${var.pm_subnet_cidr}.10${count.index + 3}/24,gw=${var.pm_subnet_cidr}.1"
+  nameserver  = var.pm_nameserver
+  ciuser      = var.pm_ciuser_name
   sshkeys     = local.ssh_pub_keys
 
   disk {
-    type    = "virtio"
-    size    = "2252M"
+    type    = var.pm_storage_type
+    size    = var.pm_storage_size
     storage = var.pm_storage_data_zfs_sdb
   }
 
   network {
-    model    = "virtio"
+    model    = var.pm_nic_type
     bridge   = var.pm_nic_name
     tag      = var.pm_vlan_num
     firewall = false

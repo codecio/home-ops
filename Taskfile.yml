@@ -34,4 +34,3 @@ tasks:
         terraform
         pre-commit
         commitlint
-

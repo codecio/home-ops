@@ -13,6 +13,20 @@ variable "pm_template_name" {
   type    = string
   default = "ubuntu-20.04-cloudimg-template"
 }
+variable "pm_ciuser_name" {
+  type    = string
+  default = "ansible"
+}
+
+variable "pm_nameserver" {
+  type    = string
+  default = "8.8.8.8"
+}
+
+variable "pm_nic_type" {
+  type    = string
+  default = "virtio"
+}
 
 variable "pm_nic_name" {
   type    = string
@@ -27,6 +41,16 @@ variable "pm_vlan_num" {
 variable "pm_subnet_cidr" {
   type    = string
   default = "192.168.40"
+}
+
+variable "pm_storage_type" {
+  type    = string
+  default = "virtio"
+}
+
+variable "pm_storage_size" {
+  type    = string
+  default = "50G"
 }
 
 variable "pm_storage_data_zfs_sda" {
