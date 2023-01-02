@@ -1,4 +1,4 @@
-# kubernete cluster control nodes
+# kubernetes cluster control nodes
 resource "proxmox_vm_qemu" "k3s_control_nodes" {
   name        = "k3s-control-${count.index}"
   count       = 3
