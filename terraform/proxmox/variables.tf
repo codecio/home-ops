@@ -11,7 +11,7 @@ variable "pm_host" {
 
 variable "pm_template_name" {
   type    = string
-  default = "cloud-init-fedoracloudbase-37"
+  default = "ubuntu-20.04-cloudimg-template"
 }
 
 variable "pm_nic_name" {
