@@ -7,4 +7,7 @@
   "[terraform-vars]": {
     "editor.tabSize": 2
   },
+  "[git-commit]": {
+    "editor.rulers": [72, 80]
+  }
 }
