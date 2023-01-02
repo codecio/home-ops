@@ -1,12 +1,19 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
-    -   id: end-of-file-fixer
-    -   id: check-yaml
-    -   id: check-added-large-files
-    -   id: mixed-line-ending
-    -   id: trailing-whitespace
-        args: [--markdown-linebreak-ext=md]
+      -   id: end-of-file-fixer
+      -   id: check-yaml
+      -   id: check-added-large-files
+      -   id: mixed-line-ending
+      -   id: trailing-whitespace
+          args: [--markdown-linebreak-ext=md]
+
+  # commitlint hook
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.3.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]

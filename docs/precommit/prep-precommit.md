@@ -15,3 +15,7 @@ Create `.pre-commit-config.yaml` at root.
     pre-commit sample-config > .pre-commit-config.yaml
     pre-commit install
     pre-commit run --all-files
+
+### commitlint sample
+
+echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
