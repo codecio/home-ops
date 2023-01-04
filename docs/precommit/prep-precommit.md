@@ -1,5 +1,7 @@
 # pre-commit and commitlint base setup
 
+I wanted to test out this combo setup of commintlint + pre-commit. Seems neat.
+
 ## Setup tools
 
 Using homebrew:
@@ -18,4 +20,8 @@ Create `.pre-commit-config.yaml` at root.
 
 ### commitlint sample
 
-echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+    npm install --save-dev @commitlint/{config-conventional,cli}
+    echo "module.exports = {extends: ['@commitlint/config-conventional']};" > commitlint.config.js
+    npm install husky --save-dev
+    npx husky install
+    npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'

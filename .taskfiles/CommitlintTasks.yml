@@ -1,0 +1,18 @@
+---
+version: "3"
+
+tasks:
+
+  init:
+    desc: Initialize commitlint
+    cmds:
+      - npm install --save-dev @commitlint/{config-conventional,cli}
+      - #echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
+      - npm install husky --save-dev
+      - npx husky install
+      - npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
+
+  test:
+    desc: Test commitlint
+    cmds:
+      - npx commitlint --from HEAD~1 --to HEAD --verbose

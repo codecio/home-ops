@@ -13,6 +13,7 @@ includes:
   terraform: .taskfiles/TerraformTasks.yml
   sops: .taskfiles/SopsTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
+  commitlint: .taskfiles/CommitlintTasks.yml
 
 tasks:
 
@@ -34,3 +35,4 @@ tasks:
         terraform
         pre-commit
         commitlint
+        node

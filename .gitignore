@@ -48,3 +48,6 @@ venv.bak/
 *.agekey
 *.pub
 *.key
+
+# node
+node_modules/**
