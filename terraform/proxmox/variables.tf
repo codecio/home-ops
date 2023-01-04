@@ -20,7 +20,7 @@ variable "pm_ciuser_name" {
 
 variable "pm_nameserver" {
   type    = string
-  default = "8.8.8.8"
+  default = "192.168.40.1"
 }
 
 variable "pm_nic_type" {
