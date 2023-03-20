@@ -11,7 +11,7 @@ variable "pm_host" {
 
 variable "pm_template_name" {
   type    = string
-  default = "ubuntu-20.04-cloudimg-template"
+  default = "ubuntu-22.04-cloudimg-template"
 }
 variable "pm_ciuser_name" {
   type    = string

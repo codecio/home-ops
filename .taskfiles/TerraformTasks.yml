@@ -16,10 +16,16 @@ tasks:
       - terraform plan {{.CLI_ARGS}}
 
   apply:
-    desc: Apply the changes to Cloudflare
+    desc: Apply the changes to Infra.
     dir: terraform/proxmox
     cmds:
       - terraform apply {{.CLI_ARGS}}
+
+  destroy:
+    desc: Destroy the terraform resources.
+    dir: terraform/proxmox
+    cmds:
+      - terraform destroy {{.CLI_ARGS}}
 
   fmt:
     desc: rewrite Terraform configuration files to a canonical format and style.

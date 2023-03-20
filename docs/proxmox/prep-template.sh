@@ -2,12 +2,12 @@
 
 # Set script variables
 image_url_domain="https://cloud-images.ubuntu.com"
-image_url_path="/focal/current/"
+image_url_path="/jammy/current/"
 image_url_base="$image_url_domain$image_url_path"
-image_file="focal-server-cloudimg-amd64.img"
+image_file="jammy-server-cloudimg-amd64.img"
 image_import_disk_target="data_zfs_sdb"
 vm_id=9000
-template_name="ubuntu-20.04-cloudimg-template"
+template_name="ubuntu-22.04-cloudimg-template"
 
 # Setup PVE packages required
 apt install cloud-init xz-utils libguestfs-tools -y
