@@ -3,7 +3,7 @@ terraform {
     hostname     = "app.terraform.io"
     organization = "codecio"
     workspaces {
-      name = "homelab-infra-proxmox"
+      name = "home-ops-proxmox"
     }
   }
   required_providers {
