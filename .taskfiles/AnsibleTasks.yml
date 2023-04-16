@@ -10,42 +10,35 @@ vars:
 
 tasks:
 
-  venv:
-    desc: Setup venv for ansible.
-    cmds:
-      - |
-        python3 -m venv "{{.ANSIBLE_DIR}}/venv/ansible-core"
-        source "{{.ANSIBLE_DIR}}/venv/ansible-core/bin/activate"
-        pip3 install -r "{{.ANSIBLE_DIR}}/requirements.txt"
-        python3 -V
-        ansible --version
-
-  venv-activate:
-    desc: Echo command to activate venv for ansible-core to work within this repo.
-    cmds:
-      - echo "source {{.ANSIBLE_DIR}}/venv/ansible-core/bin/activate"
-
   init:
     desc: Install / Upgrade Ansible galaxy deps
-    dir: ansible/
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible-galaxy install -r requirements.yml --roles-path ~/.ansible/roles --force
       - ansible-galaxy collection install -r requirements.yml --collections-path ~/.ansible/collections --force
+    preconditions:
+      - test -f "{{.ANSIBLE_DIR}}/requirements.yml"
 
   list:
     desc: List all the hosts
-    dir: ansible/
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --list-hosts
 
   ping:
     desc: Ping all the hosts
-    dir: ansible/
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -m 'ping'
 
   uptime:
     desc: Uptime of all the hosts
-    dir: ansible/
+    dir: "{{.ANSIBLE_DIR}}"
     cmds:
       - ansible all -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml --one-line -a 'uptime'
+
+  pve-patch:
+    desc: Update PVE hosts
+    dir: "{{.ANSIBLE_DIR}}"
+    cmds:
+      - ansible-playbook -i {{.ANSIBLE_INVENTORY_DIR}}/hosts.yml {{.ANSIBLE_PLAYBOOK_DIR}}/pve-patch.yml

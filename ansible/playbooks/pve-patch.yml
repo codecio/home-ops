@@ -1,0 +1,37 @@
+---
+- name: Patch pve hosts
+  hosts: proxmox
+  tasks:
+
+  - name: Add specified repository into sources list
+    ansible.builtin.apt_repository:
+      repo: deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+      state: present
+
+  - name: Upgdate all apt packages and cache
+    ansible.builtin.apt:
+      name: "*"
+      update_cache: yes
+      force_apt_get: yes
+      cache_valid_time: 3600
+      state: latest
+
+  - name: Upgrade all apt packages
+    ansible.builtin.apt:
+      upgrade: dist
+      force_apt_get: yes
+      state: latest
+
+  - name: Check if a reboot is needed for Ubuntu
+    register: reboot_required_file
+    stat:
+      path: /var/run/reboot-required
+      get_checksum: no
+
+  - name: Reboot a slow machine that might have lots of updates to apply
+    ansible.builtin.reboot:
+      reboot_timeout: 3600
+      connect_timeout: 5
+      pre_reboot_delay: 0
+      post_reboot_delay: 30
+    when: reboot_required_file.stat.exists
