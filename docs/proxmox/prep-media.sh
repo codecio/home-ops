@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # proxmox variables
-proxmox_ve_ver="7.3-1"
+proxmox_ve_ver="8.0-2"
 proxmox_ve_url_domain="http://download.proxmox.com"
 proxmox_ve_url_path="/iso/"
 proxmox_ve_url_base="$proxmox_ve_url_domain$proxmox_ve_url_path"
