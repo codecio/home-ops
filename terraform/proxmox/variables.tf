@@ -53,12 +53,12 @@ variable "pm_storage_size" {
   default = "50G"
 }
 
-variable "pm_storage_data_zfs_sda" {
-  type    = string
-  default = "data_zfs_sda"
-}
+#variable "pm_storage_data_zfs_sda" {
+#  type    = string
+#  default = "data_zfs_sda"
+#}
 
-variable "pm_storage_data_zfs_sdb" {
+variable "pm_storage_local_lvm" {
   type    = string
-  default = "data_zfs_sdb"
+  default = "local-lvm"
 }

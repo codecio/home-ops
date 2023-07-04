@@ -9,11 +9,11 @@ terraform {
   required_providers {
     proxmox = {
       source  = "Telmate/proxmox"
-      version = "2.9.11"
+      version = "2.9.14"
     }
     sops = {
       source  = "carlpett/sops"
-      version = "0.7.1"
+      version = "0.7.2"
     }
     curl = {
       source  = "anschoewe/curl"

@@ -5,12 +5,13 @@ image_url_domain="https://cloud-images.ubuntu.com"
 image_url_path="/jammy/current/"
 image_url_base="$image_url_domain$image_url_path"
 image_file="jammy-server-cloudimg-amd64.img"
-image_import_disk_target="data_zfs_sdb"
+image_import_disk_target="local-lvm"
 vm_id=9000
 template_name="ubuntu-22.04-cloudimg-template"
 
 # Setup PVE packages required
-apt install cloud-init xz-utils libguestfs-tools -y
+# not required for promox 8.0
+# apt install cloud-init xz-utils libguestfs-tools -y
 
 # Pull image from ubuntu repo
 wget --no-clobber $image_url_base$image_file

@@ -1,11 +1,42 @@
 ---
 - name: Patch pve hosts
   hosts: proxmox
+
   tasks:
+  - name: Comment out ceph in source list
+    ansible.builtin.replace:
+      dest: /etc/apt/sources.list.d/ceph.list
+      regexp: '^deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise'
+      replace: '#deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise'
+
+  - name: Comment out enterprise pve in list source
+    ansible.builtin.replace:
+      dest: /etc/apt/sources.list.d/pve-enterprise.list
+      regexp: '^deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise'
+      replace: '#deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise'
+
+# In case we need to remove or add offical repos back in later.
+#  - name: Remove specified repository into sources list
+#    ansible.builtin.apt_repository:
+#      repo: deb https://enterprise.proxmox.com/debian/pve bookworm pve-enterprise
+#      filename: pve-enterprise
+#      state: absent
+
+#  - name: Remove specified repository into sources list
+#    ansible.builtin.apt_repository:
+#      repo: deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise
+#      filename: bookworm enterprise
+#      state: absent
+
+#  - name: Add promox apt key
+#    ansible.builtin.apt_key:
+#      url: https://enterprise.proxmox.com/debian/proxmox-release-bookworm.gpg
+#      state: absent
 
   - name: Add specified repository into sources list
     ansible.builtin.apt_repository:
-      repo: deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+      repo: deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
+      filename: pve-no-subscription
       state: present
 
   - name: Update all apt packages and cache
@@ -24,7 +55,7 @@
 
   - name: Check if a reboot is needed for Ubuntu
     register: reboot_required_file
-    stat:
+    ansible.builtin.stat:
       path: /var/run/reboot-required
       get_checksum: no
 
