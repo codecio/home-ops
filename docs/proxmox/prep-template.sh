@@ -10,7 +10,7 @@ vm_id=9000
 template_name="ubuntu-22.04-cloudimg-template"
 
 # Setup PVE packages required
-apt install cloud-init xz-utils libguestfs-tools -y
+apt install libguestfs-tools -y
 
 # Pull image from ubuntu repo
 wget --no-clobber $image_url_base$image_file
