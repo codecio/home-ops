@@ -1,0 +1,21 @@
+---
+- name: Bootstrap SSH pve
+  hosts: proxmox
+
+  tasks:
+  - name: Creating a file with content
+    ansible.builtin.copy:
+      dest: "/etc/ssh/sshd_config.d/disable_password_auth.conf"
+      mode: 0644
+      content: |
+        ChallengeResponseAuthentication no
+        PasswordAuthentication no
+        UsePAM no
+    notify:
+      - Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
