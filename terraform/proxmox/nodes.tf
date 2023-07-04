@@ -11,7 +11,7 @@ resource "proxmox_vm_qemu" "k3s_control_nodes" {
   cores       = 2
   sockets     = 1
   cpu         = "host"
-  memory      = 4096
+  memory      = 2048
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "virtio0"
   onboot      = true
@@ -53,7 +53,7 @@ resource "proxmox_vm_qemu" "k3s_worker_nodes" {
   cores       = 2
   sockets     = 1
   cpu         = "host"
-  memory      = 4096
+  memory      = 6144
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "virtio0"
   onboot      = true
