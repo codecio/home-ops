@@ -1,6 +1,6 @@
 # 🏠 home-ops
 
-My monorepo project for the homelab with a focus on using GitOps practices with [Kubernetes](https://kubernetes.io/) to learning new tools and tech.
+My monorepo project for the homelab with a focus on using GitOps practices with [Kubernetes](https://kubernetes.io/) to learn new tools and tech.
 
 ## 📖 Docs
 
