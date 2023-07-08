@@ -1,24 +1,11 @@
-# homelab-infra
-Infra for the homelab with a focus on using gitops practices.
+# 🏠 home-ops
 
+My monorepo project for the homelab with a focus on using GitOps practices with [Kubernetes](https://kubernetes.io/) to learning new tools and tech.
 
-<details>
-  <summary>View Tasks</summary>
+## 📖 Docs
 
-## Tasks list
+At some point I'm going clean up the chicken scratch notes markdown files in [docs/](codecio/home-ops/tree/master/docs) and render them in some fancy way. The focus for now is getting k3s up.
 
-- [x] Add License.
-- [ ] Setup Proxmox VE.
-- [ ] Deploy systems to host k3s.
-- [ ] Basic workstation tools.
-- [ ] Secrets management.
-- [ ] Setup pre-commit and CI linting.
+## 🤝 Inspiration and Thanks
 
-</details>
-
-## CLI and GUI tools
-
-Installed via [Homebrew](https://brew.sh/)
-
-- [direnv](https://github.com/direnv/direnv)
-- [go-task](https://taskfile.dev/installation/)
+Thanks to the awesome folks working on ([flux-cluster-template](https://github.com/onedr0p/flux-cluster-template)), Many others shared homelab projects ([k8s-at-home](https://github.com/topics/k8s-at-home)), and community at ([k8s@home](https://discord.gg/k8s-at-home)) Discord server.
