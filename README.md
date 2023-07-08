@@ -4,7 +4,7 @@ My monorepo project for the homelab with a focus on using GitOps practices with 
 
 ## 📖 Docs
 
-At some point I'm going clean up the chicken scratch notes markdown files in [docs/](codecio/home-ops/tree/master/docs) and render them in some fancy way. The focus for now is getting k3s up.
+At some point I'm going clean up the chicken scratch notes markdown files in [docs/](codecio/home-ops/docs) and render them in some fancy way. The focus for now is getting k3s up.
 
 ## 🤝 Inspiration and Thanks
 
