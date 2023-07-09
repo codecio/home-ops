@@ -1,0 +1,33 @@
+---
+- name: Prepare cluster systems
+  hosts: kubernetes
+  become: true
+
+  tasks:
+  - name: Set localhost name to inventory hostname
+    ansible.builtin.hostname:
+      name: "{{ inventory_hostname }}"
+
+  - name: Add cluster nodes to cloud-init hosts file template
+    ansible.builtin.template:
+      src: templates/hosts.debian.tmpl.j2
+      dest: /etc/cloud/templates/hosts.debian.tmpl
+      mode: 0644
+    notify: Reboot
+
+  - name: Set locale
+    community.general.timezone:
+      name: "{{ timezone | default('Etc/UTC') }}"
+
+  - name: Disable apparmor
+    ansible.builtin.systemd:
+      name: apparmor
+      state: stopped
+      masked: true
+    notify: Reboot
+
+  handlers:
+    - name: Reboot
+      ansible.builtin.reboot:
+        msg: Rebooting servers
+        reboot_timeout: 3600
