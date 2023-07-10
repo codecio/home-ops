@@ -1,0 +1,25 @@
+---
+- name: Patch system updates
+  hosts: kubernetes
+  become: true
+
+  tasks:
+  - name: Upgrade the OS (apt-get dist-upgrade)
+    ansible.builtin.apt:
+      upgrade: dist
+      update_cache: yes
+
+  - name: Check if a reboot is needed for Ubuntu
+    register: reboot_required_file
+    ansible.builtin.stat:
+      path: /var/run/reboot-required
+      get_checksum: no
+
+  - name: Reboot a slow machine that might have lots of updates to apply
+    ansible.builtin.reboot:
+      msg: Rebooting node
+      reboot_timeout: 3600
+      connect_timeout: 5
+      pre_reboot_delay: 0
+      post_reboot_delay: 30
+    when: reboot_required_file.stat.exists
