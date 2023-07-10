@@ -1,0 +1,19 @@
+---
+- name: Build K3s cluster with a HA control plane using embedded etcd
+  hosts: kubernetes
+  become: true
+  any_errors_fatal: true
+
+  tasks:
+    - name: Check if cluster is installed
+      check_mode: false
+      ansible.builtin.stat:
+        path: /etc/rancher/k3s/config.yaml
+      register: k3s_installed
+
+    - name: Install Kubernetes
+      ansible.builtin.include_role:
+        name: xanmanning.k3s
+        public: true
+      vars:
+        k3s_state: installed

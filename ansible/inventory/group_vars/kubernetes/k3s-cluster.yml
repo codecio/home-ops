@@ -1,0 +1,8 @@
+---
+k3s_release_version: "v1.27.3+k3s1"
+k3s_become: true
+k3s_etcd_datastore: true
+k3s_use_experimental: true
+k3s_registration_address: "{{ kube_vip_addr }}"
+k3s_server:
+  node-ip: "{{ ansible_host }}"
