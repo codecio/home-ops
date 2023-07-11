@@ -5,16 +5,9 @@
   any_errors_fatal: true
 
   tasks:
-    - name: Check if cluster is installed
-      check_mode: false
-      ansible.builtin.stat:
-        path: /etc/rancher/k3s/config.yaml
-      register: k3s_installed
-
     - name: Install Kubernetes
       ansible.builtin.include_role:
         name: xanmanning.k3s
         public: true
       vars:
         k3s_state: installed
-      when: k3s_installed is false

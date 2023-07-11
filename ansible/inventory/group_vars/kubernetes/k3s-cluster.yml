@@ -5,3 +5,7 @@ k3s_etcd_datastore: true
 k3s_use_experimental: true
 k3s_server:
   node-ip: "{{ ansible_host }}"
+  # disable ingress and default LB to install via flux.
+  disable:
+  - traefik
+  - servicelb
