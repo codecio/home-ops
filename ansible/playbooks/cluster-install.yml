@@ -17,3 +17,4 @@
         public: true
       vars:
         k3s_state: installed
+      when: k3s_installed is false

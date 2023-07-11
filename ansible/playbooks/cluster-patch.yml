@@ -15,11 +15,7 @@
       path: /var/run/reboot-required
       get_checksum: no
 
-  - name: Reboot a slow machine that might have lots of updates to apply
+  - name: Reboot nodes
     ansible.builtin.reboot:
-      msg: Rebooting node
-      reboot_timeout: 3600
-      connect_timeout: 5
-      pre_reboot_delay: 0
-      post_reboot_delay: 30
+      msg: Rebooting nodes
     when: reboot_required_file.stat.exists
