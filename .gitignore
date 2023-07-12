@@ -51,3 +51,6 @@ venv.bak/
 
 # node
 node_modules/**
+
+# k8s
+kubeconfig
