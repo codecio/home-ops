@@ -20,12 +20,12 @@ virt-customize -a $image_file --install qemu-guest-agent
 
 # Create VM
 qm create $vm_id \
---memory 4096 --sockets 1 --cores 2 --vcpu 2 \
---net0 virtio,bridge=vmbr0 \
---hotplug network,disk,cpu,memory \
---agent 1 \
---name $template_name \
---ostype l26
+    --memory 4096 --sockets 1 --cores 2 --vcpu 2 \
+    --net0 virtio,bridge=vmbr0 \
+    --hotplug network,disk,cpu,memory \
+    --agent 1 \
+    --name $template_name \
+    --ostype l26
 
 # Import Image
 qm importdisk $vm_id $image_file $image_import_disk_target
