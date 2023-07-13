@@ -6,5 +6,7 @@
         "ZainChen.json",
         "PKief.material-icon-theme",
         "signageos.signageos-vscode-sops",
+        "foxundermoon.shell-format",
+        "mads-hartmann.bash-ide-vscode"
     ]
 }
