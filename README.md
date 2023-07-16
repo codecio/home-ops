@@ -13,6 +13,19 @@ At some point I'm going clean up the chicken scratch notes markdown files in [do
 | Management VLAN                               | `192.168.50.0/24` |
 | Kubernetes Nodes VLAN                         | `192.168.40.0/24` |
 
+### 🗺️ IPAM Details
+
+| Name                                          | CIDR               |
+|-----------------------------------------------|--------------------|
+| EdgeRouter X (Default Gateway & DNS Resolver) | `192.168.40.1/24`  |
+| Proxmox VE 8.0                                | `192.168.40.3/24`  |
+| Kubernetes Control Node 1                     | `192.168.40.100/24`|
+| Kubernetes Control Node 2                     | `192.168.40.101/24`|
+| Kubernetes Control Node 3                     | `192.168.40.102/24`|
+| Kubernetes Worker Node 1                      | `192.168.40.103/24`|
+| Kubernetes Worker Node 2                      | `192.168.40.104/24`|
+| Kubernetes Worker Node 3                      | `192.168.40.105/24`|
+
 ## 🤝 Inspiration and Thanks
 
 Thanks to the awesome folks working on ([flux-cluster-template](https://github.com/onedr0p/flux-cluster-template)), Many others shared homelab projects ([k8s-at-home](https://github.com/topics/k8s-at-home)), and community at ([k8s@home](https://discord.gg/k8s-at-home)) Discord server.
