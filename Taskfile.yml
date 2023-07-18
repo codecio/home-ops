@@ -8,14 +8,20 @@ vars:
   ANSIBLE_DIR: "{{.PROJECT_DIR}}/ansible"
   TERRAFORM_DIR: "{{.PROJECT_DIR}}/terraform"
 
+env:
+  KUBECONFIG: "{{.PROJECT_DIR}}/cluster/kubeconfig"
+
 includes:
   ansible: .taskfiles/AnsibleTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
+  cluster: .taskfiles/ClusterTasks.yml
   sops: .taskfiles/SopsTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
   commitlint: .taskfiles/CommitlintTasks.yml
 
 tasks:
+
+  default: task -l
 
   init:
     desc: Initialize workstation dependencies with Brew
