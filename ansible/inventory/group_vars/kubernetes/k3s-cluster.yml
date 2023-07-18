@@ -1,11 +1,15 @@
 ---
-k3s_release_version: "v1.27.3+k3s1"
+# https://github.com/PyratLabs/ansible-role-k3s
 k3s_become: true
 k3s_etcd_datastore: true
+k3s_install_hard_links: true
+k3s_registration_address: "{{ kubevip_address }}"
+k3s_release_version: "v1.27.3+k3s1"
 k3s_use_experimental: true
-k3s_server:
-  node-ip: "{{ ansible_host }}"
-  # disable ingress and default LB to install via flux.
-  disable:
-  - traefik
-  - servicelb
+
+k3s_server_manifests_urls:
+  - url: https://raw.githubusercontent.com/kube-vip/kube-vip/main/docs/manifests/rbac.yaml
+    filename: kube-vip-rbac.yaml
+
+k3s_server_manifests_templates:
+  - "kube-vip-daemonset.yml.j2"

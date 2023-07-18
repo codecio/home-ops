@@ -1,4 +1,7 @@
 ---
+# https://docs.k3s.io/cli/agent
 k3s_control_node: false
 k3s_agent:
   node-ip: "{{ ansible_host }}"
+  kubelet-arg:
+    - "feature-gates=GracefulNodeShutdown=true"

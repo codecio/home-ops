@@ -1,2 +1,23 @@
 ---
+# https://docs.k3s.io/cli/server
 k3s_control_node: true
+k3s_server:
+  node-ip: "{{ ansible_host }}"
+  tls-san:
+    - "{{ k3s_registration_address }}"
+  disable:
+    - local-storage             # Disable local-path-provisioner  - installed with Flux
+    - metrics-server            # Disable metrics-server          - installed with Flux
+    - servicelb                 # Disable servicelb               - TBD Service Load Balancer
+    - traefik                   # Disable traefik                 - TBD Ingress Controller
+  cluster-cidr: "10.42.0.0/16"  # default CIDR for pods
+  service-cidr: "10.43.0.0/16"  # default CIDR for services
+  kubelet-arg:
+    - "feature-gates=GracefulNodeShutdown=true"
+  kube-controller-manager-arg:
+    - "bind-address=0.0.0.0"
+  kube-proxy-arg:
+    - "metrics-bind-address=0.0.0.0"
+  kube-scheduler-arg:
+    - "bind-address=0.0.0.0"
+  etcd-expose-metrics: true

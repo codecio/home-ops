@@ -1,0 +1,5 @@
+---
+# The interface on the host kube-vip will bind to
+kubevip_interface: "eth0"
+# The ARP address kube-vip broadcasts for virtual ip
+kubevip_address: "192.168.40.110"
