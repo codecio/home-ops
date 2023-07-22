@@ -63,9 +63,9 @@ y | Y)
     ;;
 esac
 
-# Simple image file copy to USB flash drive.
+# Image the ISO to the USB flash drive.
 function create_usb() {
-    sudo dd bs=100M if=./$proxmox_ve_url_page of=/dev/"$1" status=progress
+    sudo dd bs=100M if="./$proxmox_ve_url_page" of="/dev/$1" status=progress
 }
 
 if create_usb "$disk_target"; then
