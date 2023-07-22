@@ -68,17 +68,10 @@ function create_usb() {
     sudo dd bs=100M if="./$proxmox_ve_url_page" of="/dev/$1" status=progress
 }
 
-if create_usb "$disk_target"; then
-    # USB imaged
-    echo "/dev/$disk_target imaged with $proxmox_ve_url_page"
-else
-    # Print error message.
-    echo "/dev/$disk_target failed imaged with $proxmox_ve_url_page Aborting..." && exit 1
+if ! create_usb "$1"; then
+    echo "/dev/$1 failed to be imaged with $proxmox_ve_url_page. Aborting..."
+    exit 1
 fi
-
-# Print success or exit for any errors.
-if [ $? -eq 0 ]; then
-    echo "Successfully prepared Proxmox Version: $proxmox_ve_ver"
-else
-    echo "Could not prepare Proxmox Version: $proxmox_ve_ver" >&2
-fi
+# Print success message.
+echo "/dev/$1 imaged with $proxmox_ve_url_page"
+echo "Successfully prepared Proxmox Version: $proxmox_ve_ver"
