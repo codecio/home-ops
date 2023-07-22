@@ -49,13 +49,13 @@ if ! verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
     exit 1
 fi
 
-# Select USB Disk target
-
-read -r -n1 -p "You are about to erase /dev/$disk_target. Are you sure? [y/N] "
+# Prompt user for confirmation before erasing the specified disk.
+read -r -n 1 -p "You are about to erase /dev/$1. Are you sure? [y/N] "
 echo
+
 case $REPLY in
 y | Y)
-    echo "Copy and convert /dev/$disk_target with $proxmox_ve_url_page "
+    echo "Copying and converting /dev/$1 with $proxmox_ve_url_page"
     ;;
 *)
     echo "Aborting..."
