@@ -17,8 +17,8 @@ proxmox_ve_url_page="proxmox-ve_$proxmox_ve_ver.iso"
 proxmox_ve_url_iso_sha256sums="SHA256SUMS"
 
 # Internal Disks
-INTERNAL_OS_DRIVE_1="disk0"
-INTERNAL_OS_DRIVE_2="disk1"
+internal_os_drive_1="disk0"
+internal_os_drive_2="disk1"
 
 # Pre-flight check: Verify device disk argument is provided.
 if [[ -z "$1" ]]; then
@@ -28,7 +28,7 @@ if [[ -z "$1" ]]; then
 fi
 
 # Check if the specified disk is an internal OS drive for a MacBook.
-if [[ $1 = "$INTERNAL_OS_DRIVE_1" || $1 = "$INTERNAL_OS_DRIVE_2" ]]; then
+if [[ $1 = "$internal_os_drive_1" || $1 = "$internal_os_drive_2" ]]; then
     echo "Error: /dev/$1 is an internal OS drive for a MacBook. Aborting..."
     exit 1
 fi
