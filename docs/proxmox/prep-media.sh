@@ -66,7 +66,9 @@ echo
 
 case $REPLY in
 y | Y)
-    echo "Copying and converting /dev/$1 with $proxmox_ve_url_page"
+    echo "Unmounting /dev/$1"
+    sudo umount "/dev/$1" || true # Ignore errors if the disk is not mounted
+    echo "Copying and imaging /dev/$1 with $proxmox_ve_url_page"
     ;;
 *)
     echo "Aborting..."
@@ -83,6 +85,12 @@ if ! create_usb "$1"; then
     echo "Error: /dev/$1 failed to be imaged with $proxmox_ve_url_page. Aborting..."
     exit 1
 fi
+
+# Unmount and detach the target disk after imaging.
+echo "Unmounting /dev/$1"
+sudo umount "/dev/$1" || true # Ignore errors if the disk is not mounted
+echo "Detaching /dev/$1"
+sudo eject "/dev/$1"
 
 # Print success message.
 echo "/dev/$1 imaged with $proxmox_ve_url_page"
