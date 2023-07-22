@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Check if running with administrative privileges
+if [[ "$(id -u)" != "0" ]]; then
+    echo "Error: This script requires administrative privileges. Please run with 'sudo' or as the root user."
+    exit 1
+fi
+
 set -e
 
 # Proxmox variables
