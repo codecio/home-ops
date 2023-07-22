@@ -28,13 +28,12 @@ function validate_url() {
     wget --spider "$1" >/dev/null 2>&1
 }
 
-if validate_url $proxmox_ve_url_base$proxmox_ve_url_page; then
-    # Get page and check if file already exists in current working directory.
-    wget --no-clobber $proxmox_ve_url_base$proxmox_ve_url_page
-else
-    # Print error message.
-    command && echo "download error: validation failed." && exit 1
+if ! validate_url "$proxmox_ve_url_base$proxmox_ve_url_page"; then
+    echo "Download error: Validation failed."
+    exit 1
 fi
+# Download the Proxmox VE ISO file if it doesn't exist in the current working directory.
+wget --no-clobber "$proxmox_ve_url_base$proxmox_ve_url_page"
 
 # Extract and match iso version with sha256sum.
 extracted_iso_shasum=$(curl -s $proxmox_ve_url_base$proxmox_ve_url_iso_sha256sums |
