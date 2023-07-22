@@ -2,7 +2,7 @@
 
 set -e
 
-# proxmox variables
+# Proxmox variables
 proxmox_ve_ver="8.0-2"
 proxmox_ve_url_domain="http://download.proxmox.com"
 proxmox_ve_url_path="/iso/"
@@ -10,11 +10,10 @@ proxmox_ve_url_base="$proxmox_ve_url_domain$proxmox_ve_url_path"
 proxmox_ve_url_page="proxmox-ve_$proxmox_ve_ver.iso"
 proxmox_ve_url_iso_sha256sums="SHA256SUMS"
 
-# Pre-flight check argument is valid.
-disk_target=$1
-
+# Pre-flight check: Verify device disk argument is provided.
 if [[ -z "$1" ]]; then
-    echo -e 'Missing devicedisk argument.\n\tExample: ./prep-media.sh /dev/diskXYZ\nAborting...'
+    echo "Missing device disk argument."
+    echo "Example: $0 /dev/diskXYZ"
     exit 1
 fi
 
