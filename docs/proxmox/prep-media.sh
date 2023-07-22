@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # proxmox variables
 proxmox_ve_ver="8.0-2"
 proxmox_ve_url_domain="http://download.proxmox.com"
