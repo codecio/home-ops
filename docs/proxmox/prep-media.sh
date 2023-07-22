@@ -23,10 +23,9 @@ if [[ $1 = "disk0" || $1 = "disk1" ]]; then
     exit 1
 fi
 
-# Simple URL Validation
+# Simple URL validation
 function validate_url() {
     wget --spider "$1" >/dev/null 2>&1
-    return $?
 }
 
 if validate_url $proxmox_ve_url_base$proxmox_ve_url_page; then
