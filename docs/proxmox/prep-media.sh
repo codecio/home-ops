@@ -10,6 +10,10 @@ proxmox_ve_url_base="$proxmox_ve_url_domain$proxmox_ve_url_path"
 proxmox_ve_url_page="proxmox-ve_$proxmox_ve_ver.iso"
 proxmox_ve_url_iso_sha256sums="SHA256SUMS"
 
+# Internal Disks
+INTERNAL_OS_DRIVE_1="disk0"
+INTERNAL_OS_DRIVE_2="disk1"
+
 # Pre-flight check: Verify device disk argument is provided.
 if [[ -z "$1" ]]; then
     echo "Error: Missing device disk argument."
@@ -18,8 +22,8 @@ if [[ -z "$1" ]]; then
 fi
 
 # Check if the specified disk is an internal OS drive for a MacBook.
-if [[ $1 = "disk0" || $1 = "disk1" ]]; then
-    echo "/dev/disk0 or /dev/disk1 are internal OS drives for a MacBook. Aborting..."
+if [[ $1 = "$INTERNAL_OS_DRIVE_1" || $1 = "$INTERNAL_OS_DRIVE_2" ]]; then
+    echo "Error: /dev/$1 is an internal OS drive for a MacBook. Aborting..."
     exit 1
 fi
 
