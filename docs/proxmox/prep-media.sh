@@ -35,19 +35,18 @@ fi
 # Download the Proxmox VE ISO file if it doesn't exist in the current working directory.
 wget --no-clobber "$proxmox_ve_url_base$proxmox_ve_url_page"
 
-# Extract and match iso version with sha256sum.
-extracted_iso_shasum=$(curl -s $proxmox_ve_url_base$proxmox_ve_url_iso_sha256sums |
+# Extract and match the ISO version with the sha256sum.
+extracted_iso_shasum=$(curl -s "$proxmox_ve_url_base$proxmox_ve_url_iso_sha256sums" |
     grep "$proxmox_ve_url_page" |
     cut -f 1 -d ' ')
 
 function verify_iso() {
-    echo "$1" "*$2" | shasum -a 256 --check
+    echo "$1 *$2" | shasum -a 256 --check
 }
 
-if verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
-    echo "shasum verified: OK"
-else
-    echo "shasum verified: NO" && exit 1
+if ! verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
+    echo "SHA256 verification failed. Aborting..."
+    exit 1
 fi
 
 # Select USB Disk target
