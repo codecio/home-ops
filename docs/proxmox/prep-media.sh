@@ -61,7 +61,11 @@ if ! verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
 fi
 
 # Prompt user for confirmation before erasing the specified disk.
-read -r -n 1 -p "You are about to erase /dev/$1. Are you sure? [y/N] "
+read -r -n 1 -p "WARNING: You are about to erase the disk /dev/$1 and write the Proxmox VE image to it. This will result in the complete loss of all data on the disk.
+
+**IMPORTANT**: Ensure that you have selected the correct disk, as this action cannot be undone, and all data on the selected disk will be irreversibly destroyed!
+
+Are you absolutely sure you want to proceed? [y/N] "
 echo
 
 case $REPLY in
