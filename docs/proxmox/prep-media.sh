@@ -109,7 +109,10 @@ fi
 echo "Detaching /dev/$1"
 sudo eject "/dev/$1"
 
-# Print success message.
-echo "/dev/$1 imaged with $proxmox_ve_url_page"
-echo "Successfully prepared Proxmox Version: $proxmox_ve_ver"
+# Display a summary report after successful completion.
+echo "===== Summary Report ====="
+echo "Disk: /dev/$1"
+echo "Proxmox Version: $proxmox_ve_ver"
+echo "Successfully prepared Proxmox VE USB flash drive."
+echo "=========================="
 exit 0
