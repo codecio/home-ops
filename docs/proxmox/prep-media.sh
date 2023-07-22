@@ -17,8 +17,9 @@ if [[ -z "$1" ]]; then
     exit 1
 fi
 
+# Check if the specified disk is an internal OS drive for a MacBook.
 if [[ $1 = "disk0" || $1 = "disk1" ]]; then
-    echo -e '/dev/disk0 or /dev/disk1 are internal OS drives for a MacBook. Aborting...'
+    echo "/dev/disk0 or /dev/disk1 are internal OS drives for a MacBook. Aborting..."
     exit 1
 fi
 
