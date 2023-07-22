@@ -66,8 +66,11 @@ echo
 
 case $REPLY in
 y | Y)
-    echo "Unmounting /dev/$1"
-    sudo umount "/dev/$1" || true # Ignore errors if the disk is not mounted
+    # Check if the disk is mounted before unmounting
+    if grep -qs "/dev/$1" /proc/mounts; then
+        echo "Unmounting /dev/$1"
+        sudo umount "/dev/$1"
+    fi
     echo "Copying and imaging /dev/$1 with $proxmox_ve_url_page"
     ;;
 *)
@@ -86,9 +89,13 @@ if ! create_usb "$1"; then
     exit 1
 fi
 
-# Unmount and detach the target disk after imaging.
-echo "Unmounting /dev/$1"
-sudo umount "/dev/$1" || true # Ignore errors if the disk is not mounted
+# Unmount the target disk after imaging.
+if grep -qs "/dev/$1" /proc/mounts; then
+    echo "Unmounting /dev/$1"
+    sudo umount "/dev/$1"
+fi
+
+# Detach the target disk after imaging.
 echo "Detaching /dev/$1"
 sudo eject "/dev/$1"
 
