@@ -72,6 +72,7 @@ if ! create_usb "$1"; then
     echo "/dev/$1 failed to be imaged with $proxmox_ve_url_page. Aborting..."
     exit 1
 fi
+
 # Print success message.
 echo "/dev/$1 imaged with $proxmox_ve_url_page"
 echo "Successfully prepared Proxmox Version: $proxmox_ve_ver"
