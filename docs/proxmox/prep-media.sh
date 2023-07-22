@@ -33,6 +33,12 @@ if [[ $1 = "$internal_os_drive_1" || $1 = "$internal_os_drive_2" ]]; then
     exit 1
 fi
 
+# Check if the provided argument is a valid block device.
+if [[ ! -b "/dev/$1" ]]; then
+    echo "Error: The specified device '/dev/$1' is not a valid block device."
+    exit 1
+fi
+
 # Simple URL validation
 function validate_url() {
     wget --spider "$1" >/dev/null 2>&1
