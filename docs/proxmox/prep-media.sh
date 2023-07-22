@@ -12,7 +12,7 @@ proxmox_ve_url_iso_sha256sums="SHA256SUMS"
 
 # Pre-flight check: Verify device disk argument is provided.
 if [[ -z "$1" ]]; then
-    echo "Missing device disk argument."
+    echo "Error: Missing device disk argument."
     echo "Example: $0 /dev/diskXYZ"
     exit 1
 fi
@@ -29,9 +29,10 @@ function validate_url() {
 }
 
 if ! validate_url "$proxmox_ve_url_base$proxmox_ve_url_page"; then
-    echo "Download error: Validation failed."
+    echo "Error: Proxmox VE ISO download validation failed."
     exit 1
 fi
+
 # Download the Proxmox VE ISO file if it doesn't exist in the current working directory.
 wget --no-clobber "$proxmox_ve_url_base$proxmox_ve_url_page"
 
@@ -45,7 +46,7 @@ function verify_iso() {
 }
 
 if ! verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
-    echo "SHA256 verification failed. Aborting..."
+    echo "Error: SHA256 verification failed for the downloaded ISO. Aborting.."
     exit 1
 fi
 
@@ -69,10 +70,11 @@ function create_usb() {
 }
 
 if ! create_usb "$1"; then
-    echo "/dev/$1 failed to be imaged with $proxmox_ve_url_page. Aborting..."
+    echo "Error: /dev/$1 failed to be imaged with $proxmox_ve_url_page. Aborting..."
     exit 1
 fi
 
 # Print success message.
 echo "/dev/$1 imaged with $proxmox_ve_url_page"
 echo "Successfully prepared Proxmox Version: $proxmox_ve_ver"
+exit 0
