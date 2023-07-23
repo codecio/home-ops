@@ -1,49 +1,53 @@
 #!/usr/bin/env bash
 
+set -e  # Exit immediately on error
+
 # Set script variables
-image_url_domain="https://cloud-images.ubuntu.com"
-image_url_path="/jammy/current/"
-image_url_base="$image_url_domain$image_url_path"
-image_file="jammy-server-cloudimg-amd64.img"
-image_import_disk_target="local-lvm"
-vm_id=9000
-template_name="ubuntu-22.04-cloudimg-template"
+IMAGE_URL_DOMAIN="https://cloud-images.ubuntu.com"
+IMAGE_URL_PATH="/jammy/current/"
+IMAGE_URL_BASE="$IMAGE_URL_DOMAIN$IMAGE_URL_PATH"
+IMAGE_FILE="jammy-server-cloudimg-amd64.img"
+IMAGE_IMPORT_DISK_TARGET="local-lvm"
+VM_ID=9000
+TEMPLATE_NAME="ubuntu-22.04-cloudimg-template"
 
 # Setup PVE packages required
-apt install libguestfs-tools -y
+apt-get install -y libguestfs-tools
 
-# Pull image from ubuntu repo
-wget --no-clobber $image_url_base$image_file
+# Pull image from ubuntu repo if it doesn't exist
+if [ ! -f "$IMAGE_FILE" ]; then
+    wget --no-clobber "$IMAGE_URL_BASE$IMAGE_FILE"
+fi
 
 # Install qemu-guest-agent to bake into img
-virt-customize -a $image_file --install qemu-guest-agent
+virt-customize -a "$IMAGE_FILE" --install qemu-guest-agent
 
 # Create VM
-qm create $vm_id \
+qm create $VM_ID \
     --memory 4096 --sockets 1 --cores 2 --vcpu 2 \
     --net0 virtio,bridge=vmbr0 \
     --hotplug network,disk,cpu,memory \
     --agent 1 \
-    --name $template_name \
+    --name "$TEMPLATE_NAME" \
     --ostype l26
 
 # Import Image
-qm importdisk $vm_id $image_file $image_import_disk_target
+qm importdisk $VM_ID $IMAGE_FILE $IMAGE_IMPORT_DISK_TARGET
 
 # Bind image to a storage device
-qm set $vm_id --scsihw virtio-scsi-pci --virtio0 $image_import_disk_target:vm-$vm_id-disk-0
+qm set $VM_ID --scsihw virtio-scsi-pci --virtio0 "$IMAGE_IMPORT_DISK_TARGET:vm-$VM_ID-disk-0"
 
 # Add drive for cloud-init
-qm set $vm_id --ide2 $image_import_disk_target:cloudinit
+qm set $VM_ID --ide2 "$IMAGE_IMPORT_DISK_TARGET:cloudinit"
 
 # Configure VM to boot from image
-qm set $vm_id --boot c --bootdisk virtio0
+qm set $VM_ID --boot c --bootdisk virtio0
 
 # Add a serial console socket
-qm set $vm_id --serial0 socket
+qm set $VM_ID --serial0 socket
 
 # Convert the VM to a template
-qm template $vm_id
+qm template $VM_ID
 
 # Clean up img file
-rm -f jammy-server-cloudimg-amd64.img
+rm -f "$IMAGE_FILE"
