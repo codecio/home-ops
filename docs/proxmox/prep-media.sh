@@ -168,6 +168,6 @@ sudo diskutil eject "$disk_device"
 echo "===== Summary Report ====="
 print_success "Disk: $disk_device"
 print_success "Proxmox Version: $proxmox_ve_ver"
-print_success "Successfully prepared Proxmox VE USB flash drive."
+print_success "Prepared Proxmox VE USB flash drive."
 echo "=========================="
 exit 0
