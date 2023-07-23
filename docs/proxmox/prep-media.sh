@@ -51,7 +51,8 @@ function list_external_physical_disks() {
 
 # Function to prompt the user for disk selection and set it as the disk_device.
 function select_disk_device() {
-    local total_disks=$(diskutil list | grep "(external, physical)" | wc -l)
+    local total_disks
+    total_disks=$(diskutil list | grep -c "(external, physical)")
     read -rp "Enter the number of the disk you want to use (e.g., 1, 2, 3): " choice
 
     # Validate user input as an integer within the valid range.
