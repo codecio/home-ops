@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
 
+# Define color codes for messages
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Function to print error messages in red
+function print_error() {
+    echo -e "${RED}[Error] $1${NC}"
+}
+
+# Function to print success messages in green
+function print_success() {
+    echo -e "${GREEN}[Success] $1${NC}"
+}
+
 # Check if running with administrative privileges
 if [[ "$(id -u)" != "0" ]]; then
-    echo "Error: This script requires administrative privileges. Please run with 'sudo' or as the root user."
+    print_error "This script requires administrative privileges. Please run with 'sudo' or as the root user."
     exit 1
 fi
 
@@ -18,7 +33,7 @@ function list_external_physical_disks() {
 
     # Check if any disks were found.
     if [[ ${#disks[@]} -eq 0 ]]; then
-        echo "No external physical disks found."
+        print_error "No external physical disks found."
         exit 1
     fi
 
@@ -41,13 +56,13 @@ function select_disk_device() {
 
     # Validate user input as an integer within the valid range.
     if [[ ! $choice =~ ^[0-9]+$ || $choice -lt 1 || $choice -gt $total_disks ]]; then
-        echo "Error: Invalid selection. Please enter a number between 1 and $total_disks."
+        print_error "Invalid selection. Please enter a number between 1 and $total_disks."
         exit 1
     fi
 
     # Get the selected disk identifier from the list.
     disk_device=$(diskutil list | grep "(external, physical)" | sed -n "${choice}p" | awk '{print $1}')
-    echo "Selected Disk: $disk_device"
+    print_success "Selected Disk: $disk_device"
 }
 
 # Disk logic setup
@@ -68,13 +83,13 @@ internal_os_drive_2="disk1"
 
 # Check if the specified disk is an internal OS drive for a MacBook.
 if [[ $disk_device = "$internal_os_drive_1" || $disk_device = "$internal_os_drive_2" ]]; then
-    echo "Error: $disk_device is an internal OS drive for a MacBook. Aborting..."
+    print_error "$disk_device is an internal OS drive for a MacBook. Aborting..."
     exit 1
 fi
 
 # Check if the provided argument is a valid block device.
 if [[ ! -b "$disk_device" ]]; then
-    echo "Error: The specified device '$disk_device' is not a valid block device."
+    print_error "The specified device '$disk_device' is not a valid block device."
     exit 1
 fi
 
@@ -84,7 +99,7 @@ function validate_url() {
 }
 
 if ! validate_url "$proxmox_ve_url_base$proxmox_ve_url_page"; then
-    echo "Error: Proxmox VE ISO download validation failed."
+    print_error "Proxmox VE ISO download validation failed."
     exit 1
 fi
 
@@ -101,7 +116,7 @@ function verify_iso() {
 }
 
 if ! verify_iso "$extracted_iso_shasum" "$proxmox_ve_url_page"; then
-    echo "Error: SHA256 verification failed for the downloaded ISO. Aborting.."
+    print_error "SHA256 verification failed for the downloaded ISO. Aborting.."
     exit 1
 fi
 
@@ -134,7 +149,7 @@ function create_usb() {
 }
 
 if ! create_usb "$disk_device"; then
-    echo "Error: $disk_device failed to be imaged with $proxmox_ve_url_page. Aborting..."
+    print_error "Error: $disk_device failed to be imaged with $proxmox_ve_url_page. Aborting..."
     exit 1
 fi
 
@@ -150,8 +165,8 @@ sudo diskutil eject "$disk_device"
 
 # Display a summary report after successful completion.
 echo "===== Summary Report ====="
-echo "Disk: $disk_device"
-echo "Proxmox Version: $proxmox_ve_ver"
-echo "Successfully prepared Proxmox VE USB flash drive."
+print_success "Disk: $disk_device"
+print_success "Proxmox Version: $proxmox_ve_ver"
+print_success "Successfully prepared Proxmox VE USB flash drive."
 echo "=========================="
 exit 0
