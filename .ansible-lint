@@ -1,4 +1,0 @@
-skip_list:
-  - yaml
-  - var-naming
-  - package-latest
