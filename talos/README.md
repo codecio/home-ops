@@ -18,6 +18,6 @@
    curl -X POST --data-binary @talos/schematic.yaml https://factory.talos.dev/schematics
    ```
 
-3. Update the ID in this file and in the `dhcp-boot=tag:ipxe` line of `network/dnsmasq.conf`.
+3. Update the ID in this file and in the `dhcp-boot=tag:ipxe` line of `network/dnsmasq.conf`. TOPF computes the installer image from `schematic.yaml` itself.
 
-Change the Talos version in the same two places.
+Change the Talos version in `topf.yaml`, this file, and `network/dnsmasq.conf`.

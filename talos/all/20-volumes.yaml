@@ -1,0 +1,14 @@
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 200GiB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: longhorn
+volumeType: partition
+provisioning:
+  diskSelector:
+    match: system_disk
+  minSize: 100GiB

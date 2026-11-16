@@ -12,11 +12,14 @@ Both networks use the addresses below, so the cluster runs the same on either on
 ## Layout
 
 - `README.md` has the setup steps in order: lab network, BIOS, and Talos.
+- `Taskfile.yaml` and `.taskfiles/` hold every command that changes the MacBook or the nodes. Run `task` to list them.
 - `docs/hardware.md` records each unit's BIOS version, NIC, and disks.
 - `network/dnsmasq.conf` is the DHCP, DNS, and PXE config for the lab segment.
 - `scripts/lab-net-up.sh` and `scripts/lab-net-down.sh` turn the MacBook gateway on and off.
 - `scripts/lab-net.env` holds the values both scripts share.
 - `talos/schematic.yaml` lists the Talos extensions. `talos/README.md` records the Talos version and the schematic ID.
+- `talos/topf.yaml` lists the nodes for TOPF. The patches in `talos/all/`, `talos/control-plane/`, and `talos/node/<host>/` build each node's config.
+- `talos/secrets.sops.yaml` is the Talos secrets bundle, encrypted with the rules in `.sops.yaml`.
 
 ## Lab network
 
@@ -33,15 +36,18 @@ When the MacBook is the gateway, it NATs 192.168.10.0/24 out of the interface th
 
 ## Rules
 
+- Change the MacBook and the nodes only through `task`. Write or edit the task, and the operator runs it. Read-only checks, such as `task --dry`, `task talos:genconfig`, and `talosctl get`, are fine.
 - Scope every MacBook network change to `en13`. Don't touch Wi-Fi or other network services.
 - Keep MacBook changes non-persistent and reversible, such as `sysctl -w` and the `com.apple/lab-nat` pf anchor. Don't edit `/etc/pf.conf` or other system files, and don't use `brew services`.
 - Show every `sudo` command before it runs.
 - Before `diskutil erase*` or `dd`, run `diskutil list`, name the target disk and why (external, physical, size), and wait for confirmation. Never touch `disk0`, an internal disk, or an APFS container.
-- Never commit secrets or large binaries. Keep Talos secrets outside the repo.
+- Never commit plaintext secrets or large binaries. Encrypt secrets with SOPS to the `home-ops` age key at `~/.config/sops/age/home-ops.txt`. Never use `~/.config/sops/age/keys.txt`, which is a work key.
+- The talosconfig, the kubeconfig, and rendered node configs live in `~/.talos/home-ops`, outside the repo.
 - Keep serial numbers out of the repo.
 - Don't pick or download BIOS files. The operator supplies them.
 - Keep the lab segment behind NAT. The Talos maintenance API on port 50000 has no authentication.
 - `talosctl` must match the Talos version in `talos/README.md`.
+- Use node IPs as `talosctl` endpoints, not the VIP.
 
 ## Git
 
