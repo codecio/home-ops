@@ -3,4 +3,5 @@ customization:
     officialExtensions:
       - siderolabs/amd-ucode
       - siderolabs/iscsi-tools
+      - siderolabs/realtek-firmware
       - siderolabs/util-linux-tools

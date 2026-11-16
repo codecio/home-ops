@@ -3,9 +3,9 @@
 | Item | Value |
 | --- | --- |
 | Talos version | v1.14.5 |
-| Schematic ID | `743d53d3c9cc1942e0a3fc7167565665ea25823e6261d82bf022e9a9e50ed84d` |
-| Extensions | `siderolabs/amd-ucode`, `siderolabs/iscsi-tools`, `siderolabs/util-linux-tools` |
-| PXE script | `https://pxe.factory.talos.dev/pxe/743d53d3c9cc1942e0a3fc7167565665ea25823e6261d82bf022e9a9e50ed84d/v1.14.5/metal-amd64` |
+| Schematic ID | `05bdd018b977b3419c717ae2dac043e6fee9317ad93ce22a4569dc3c8aaa8aed` |
+| Extensions | `siderolabs/amd-ucode`, `siderolabs/iscsi-tools`, `siderolabs/realtek-firmware`, `siderolabs/util-linux-tools` |
+| PXE script | `https://pxe.factory.talos.dev/pxe/05bdd018b977b3419c717ae2dac043e6fee9317ad93ce22a4569dc3c8aaa8aed/v1.14.5/metal-amd64` |
 
 `talosctl` must match the Talos version. Check it with `talosctl version --client --short`.
 
