@@ -1,0 +1,16 @@
+secrets.yaml
+talosconfig
+kubeconfig
+age.key
+*.key
+*.iso
+*.raw
+*.raw.xz
+
+bios/
+*.rom
+*.bin
+*.cap
+*.fd
+
+.DS_Store
