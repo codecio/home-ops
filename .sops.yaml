@@ -1,0 +1,7 @@
+creation_rules:
+  - path_regex: talos/secrets\.sops\.yaml$
+    mac_only_encrypted: true
+    age: age1qx77qf5nesrduvr0effevwz06aen3hwm0xjlfuh62j4w864s6glsdvwhva
+stores:
+  yaml:
+    indent: 2

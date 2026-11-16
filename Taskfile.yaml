@@ -1,0 +1,18 @@
+version: '3'
+
+vars:
+  LOCAL_DIR: '{{.HOME}}/.talos/home-ops'
+
+env:
+  SOPS_AGE_KEY_FILE: '{{.HOME}}/.config/sops/age/home-ops.txt'
+  TOPFCONFIG: '{{.ROOT_DIR}}/talos/topf.yaml'
+  TALOSCONFIG: '{{.LOCAL_DIR}}/talosconfig'
+  KUBECONFIG: '{{.LOCAL_DIR}}/kubeconfig'
+
+includes:
+  lab: .taskfiles/lab
+  talos: .taskfiles/talos
+  bootstrap: .taskfiles/bootstrap
+
+tasks:
+  default: task --list

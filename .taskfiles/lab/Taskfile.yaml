@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  up:
+    desc: Turn on the MacBook lab gateway on en13
+    interactive: true
+    cmds:
+      - sudo {{.ROOT_DIR}}/scripts/lab-net-up.sh
+
+  down:
+    desc: Turn off the MacBook lab gateway
+    interactive: true
+    cmds:
+      - sudo {{.ROOT_DIR}}/scripts/lab-net-down.sh

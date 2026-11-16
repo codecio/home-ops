@@ -1,0 +1,11 @@
+version: '3'
+
+tasks:
+  talos:
+    desc: Install every node in talos/topf.yaml, bootstrap etcd, and wait for the nodes to be Ready
+    cmds:
+      # No node can report ready until etcd is bootstrapped.
+      - until topf apply --confirm=false --allow-not-ready --skip-post-apply-checks --auto-bootstrap; do sleep 10; done
+      - task: :talos:kubeconfig
+      - until kubectl get nodes; do sleep 10; done
+      - kubectl wait --for=condition=Ready nodes --all --timeout=15m

@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  genconfig:
+    desc: Render and validate each node's config in ~/.talos/home-ops/clusterconfig
+    cmds:
+      - mkdir -m 700 -p {{.LOCAL_DIR}}/clusterconfig
+      - topf render --output {{.LOCAL_DIR}}/clusterconfig
+      - for f in {{.LOCAL_DIR}}/clusterconfig/*.yaml; do talosctl validate --mode metal --config "$f"; done
+
+  apply:
+    desc: Show the diff and apply the config. Set TOPF_NODES_FILTER=<host> for one node.
+    interactive: true
+    cmds:
+      - topf apply {{.CLI_ARGS}}
+
+  kubeconfig:
+    desc: Write the talosconfig and a 12-hour admin kubeconfig to ~/.talos/home-ops
+    cmds:
+      - mkdir -m 700 -p {{.LOCAL_DIR}}
+      - topf talosconfig --redact=false > "$TALOSCONFIG"
+      - topf kubeconfig --redact=false > "$KUBECONFIG"
