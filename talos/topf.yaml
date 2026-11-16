@@ -6,6 +6,12 @@ schematicId: "@schematic.yaml"
 secretsPath: secrets.sops.yaml
 
 nodes:
+  - host: motoko-01
+    ip: 192.168.10.11
+    role: control-plane
+  - host: batou-02
+    ip: 192.168.10.12
+    role: control-plane
   - host: togusa-03
     ip: 192.168.10.13
     role: control-plane
