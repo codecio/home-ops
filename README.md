@@ -86,3 +86,50 @@ sequenceDiagram
 8. Rerun `sudo scripts/lab-net-up.sh`. Power-cycle each node and network boot it again from `F7`, so it takes its reserved address.
 
 The maintenance API has no authentication. Keep the nodes on the lab network until the cluster config is applied.
+
+## 4. Install Talos to disk
+
+Every node gets the shared config in `talos/patches/controlplane.yaml` plus its own `talos/patches/<hostname>.yaml`, which sets its hostname and fixed address. To add a node, copy `talos/patches/togusa-03.yaml` and change both. On the 1 TB disk, Talos keeps 200 GiB for itself, and the `longhorn` volume at `/var/mnt/longhorn` takes the rest.
+
+```mermaid
+sequenceDiagram
+  participant T as talosctl on the MacBook
+  participant N as Node in maintenance mode
+  participant F as Image Factory
+  T->>N: apply-config with the shared and node patches
+  N->>F: Pull the installer image through the MacBook NAT
+  F-->>N: Installer with the schematic's extensions
+  Note over N: Writes Talos, EPHEMERAL, and longhorn to nvme0n1
+  Note over N: Reboots from disk with its hostname and fixed address
+```
+
+Generate the secrets and the config once. They stay in `~/.talos/home-ops`, outside the repo:
+
+```bash
+mkdir -m 700 -p ~/.talos/home-ops
+talosctl gen secrets -o ~/.talos/home-ops/secrets.yaml
+talosctl gen config section9 https://192.168.10.10:6443 \
+  --with-secrets ~/.talos/home-ops/secrets.yaml \
+  --config-patch-control-plane @talos/patches/controlplane.yaml \
+  --output-types controlplane,talosconfig --output-dir ~/.talos/home-ops
+```
+
+Then, for each node in maintenance mode:
+
+1. Apply the config. This erases the node's disk and installs Talos.
+
+   ```bash
+   talosctl apply-config --insecure -n <pool-ip> \
+     --file ~/.talos/home-ops/controlplane.yaml \
+     --config-patch @talos/patches/<hostname>.yaml
+   ```
+
+2. Wait for the node to answer at its fixed address, then check the disk layout and the extensions:
+
+   ```bash
+   export TALOSCONFIG=~/.talos/home-ops/talosconfig
+   talosctl -e <node-ip> -n <node-ip> get discoveredvolumes
+   talosctl -e <node-ip> -n <node-ip> get extensions
+   ```
+
+Until the cluster is bootstrapped, each node reports `etcd not running`.

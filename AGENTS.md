@@ -17,6 +17,7 @@ Both networks use the addresses below, so the cluster runs the same on either on
 - `scripts/lab-net-up.sh` and `scripts/lab-net-down.sh` turn the MacBook gateway on and off.
 - `scripts/lab-net.env` holds the values both scripts share.
 - `talos/schematic.yaml` lists the Talos extensions. `talos/README.md` records the Talos version and the schematic ID.
+- `talos/patches/controlplane.yaml` is the config every node shares. `talos/patches/<hostname>.yaml` sets one node's hostname and address.
 
 ## Lab network
 
@@ -37,11 +38,13 @@ When the MacBook is the gateway, it NATs 192.168.10.0/24 out of the interface th
 - Keep MacBook changes non-persistent and reversible, such as `sysctl -w` and the `com.apple/lab-nat` pf anchor. Don't edit `/etc/pf.conf` or other system files, and don't use `brew services`.
 - Show every `sudo` command before it runs.
 - Before `diskutil erase*` or `dd`, run `diskutil list`, name the target disk and why (external, physical, size), and wait for confirmation. Never touch `disk0`, an internal disk, or an APFS container.
-- Never commit secrets or large binaries. Keep Talos secrets outside the repo.
+- Never commit secrets or large binaries. Talos secrets, the talosconfig, and the kubeconfig live in `~/.talos/home-ops`.
 - Keep serial numbers out of the repo.
 - Don't pick or download BIOS files. The operator supplies them.
 - Keep the lab segment behind NAT. The Talos maintenance API on port 50000 has no authentication.
 - `talosctl` must match the Talos version in `talos/README.md`.
+- Use node IPs as `talosctl` endpoints, not the VIP.
+- Bootstrap etcd once, on one node only.
 
 ## Git
 

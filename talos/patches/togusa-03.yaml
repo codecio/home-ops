@@ -1,0 +1,13 @@
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: togusa-03
+auto:
+  $patch: delete
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: enp3s0
+addresses:
+  - address: 192.168.10.13/24
+routes:
+  - gateway: 192.168.10.1

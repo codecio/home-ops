@@ -1,0 +1,38 @@
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/05bdd018b977b3419c717ae2dac043e6fee9317ad93ce22a4569dc3c8aaa8aed:v1.14.5
+provisioning:
+  diskSelector:
+    match: disk.dev_path == "/dev/nvme0n1"
+---
+apiVersion: v1alpha1
+kind: VolumeConfig
+name: EPHEMERAL
+provisioning:
+  maxSize: 200GiB
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: longhorn
+volumeType: partition
+provisioning:
+  diskSelector:
+    match: system_disk
+  minSize: 100GiB
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 192.168.10.1
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+taints:
+  node-role.kubernetes.io/control-plane:
+    $patch: delete
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 192.168.10.10
+link: enp3s0
